@@ -1,4 +1,21 @@
 {
   "js/ts.tsdk.path": "node_modules\\typescript\\lib",
-  "cSpell.words": ["fontsource", "njsproj", "ntvs", "nuqs", "Nuqs", "shadcn", "VITE"]
+  "cSpell.words": [
+    "fontsource",
+    "njsproj",
+    "ntvs",
+    "nuqs",
+    "Nuqs",
+    "shadcn",
+    "VITE"
+  ],
+  "task.allowAutomaticTasks": true,
+  "debug.openDebug": "neverOpen",
+  "terminal.integrated.inheritEnv": false,
+  "tasks": {
+    "label": "lint on open",
+    "type": "shell",
+    "command": "npm run lint",
+    "runOn": "folderOpen"
+  }
 }
