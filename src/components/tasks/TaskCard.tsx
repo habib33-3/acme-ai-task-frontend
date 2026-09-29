@@ -2,8 +2,9 @@ import { Status, type Task } from "@/types";
 import { Badge } from "../ui/badge";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-import { PencilIcon, TrashIcon, ArrowRightIcon } from "lucide-react";
+import { TrashIcon, ArrowRightIcon } from "lucide-react";
 import UpdateTaskDialog from "../update-tasks/UpdateTaskDialog";
+import UpdateTaskStatusDropdown from "../update-tasks/UpdateTaskStatusDropdown";
 
 type Props = {
   task: Task;
@@ -27,12 +28,7 @@ const TaskCard = ({ task }: Props) => {
         <div className="mb-3 flex justify-end gap-1">
           <UpdateTaskDialog id={task.id} />
 
-          <Button
-            variant="ghost"
-            size="icon"
-            title="Update status">
-            <ArrowRightIcon className="h-4 w-4" />
-          </Button>
+          <UpdateTaskStatusDropdown task={task} />
 
           <Button
             variant="ghost"
