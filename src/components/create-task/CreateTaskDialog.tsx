@@ -1,10 +1,15 @@
 import CreateTaskForm from "./CreateTaskForm";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { useState } from "react";
 
 const CreateTaskDialog = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={setOpen}>
       <DialogTrigger render={<Button />}>Create Task</DialogTrigger>
 
       <DialogContent className="bg-background m-4 p-3 sm:max-w-lg">
@@ -12,7 +17,7 @@ const CreateTaskDialog = () => {
           <DialogTitle>Create Task</DialogTitle>
         </DialogHeader>
 
-        <CreateTaskForm />
+        <CreateTaskForm onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

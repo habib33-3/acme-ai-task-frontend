@@ -1,6 +1,9 @@
 import { Status, type Task } from "@/types";
 import { Badge } from "../ui/badge";
 import { Card, CardContent } from "../ui/card";
+import { Button } from "../ui/button";
+import { PencilIcon, TrashIcon, ArrowRightIcon } from "lucide-react";
+import UpdateTaskDialog from "../update-tasks/UpdateTaskDialog";
 
 type Props = {
   task: Task;
@@ -18,11 +21,27 @@ const TaskCard = ({ task }: Props) => {
             ? "#FEF3C7"
             : task.status === Status.IN_PROGRESS
               ? "#DBEAFE"
-              : task.status === Status.COMPLETED
-                ? "#FEE2E2"
-                : "#DCFCE7",
+              : "#DCFCE7",
       }}>
       <CardContent className="p-4">
+        <div className="mb-3 flex justify-end gap-1">
+          <UpdateTaskDialog id={task.id} />
+
+          <Button
+            variant="ghost"
+            size="icon"
+            title="Update status">
+            <ArrowRightIcon className="h-4 w-4" />
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            title="Delete task">
+            <TrashIcon className="h-4 w-4" />
+          </Button>
+        </div>
+
         <div className="space-y-3">
           <div>
             <h3 className="line-clamp-2 text-sm leading-5 font-semibold">{task.title}</h3>
@@ -37,6 +56,7 @@ const TaskCard = ({ task }: Props) => {
           <div className="flex items-center justify-between gap-3">
             <Badge
               variant="outline"
+              className="capitalize"
               style={{
                 backgroundColor:
                   task.priority === "LOW"
@@ -44,8 +64,7 @@ const TaskCard = ({ task }: Props) => {
                     : task.priority === "MEDIUM"
                       ? "#EAB308"
                       : "#38A169",
-              }}
-              className="capitalize">
+              }}>
               {task.priority.toLowerCase()}
             </Badge>
 

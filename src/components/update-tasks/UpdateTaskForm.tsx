@@ -1,37 +1,66 @@
-import { createTaskSchema, type CreateTaskSchema } from "@/schema/create-task.schema";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../ui/button";
-import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import useGetSingleTask from "@/hooks/useGetSingleTask";
+import useUpdateTask from "@/hooks/useUpdateTask";
+import { updateTaskSchema, type UpdateTaskSchema } from "@/schema/update-task.schema";
 import { Priority } from "@/types";
-import { DialogClose, DialogFooter } from "../ui/dialog";
-import useCreateTask from "@/hooks/useCreateTask";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+
+import { Button } from "@/components/ui/button";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type Props = {
+  id: string;
   onSuccess: () => void;
 };
 
-const CreateTaskForm = ({ onSuccess }: Props) => {
-  const form = useForm<CreateTaskSchema>({
+const UpdateTaskForm = ({ id, onSuccess }: Props) => {
+  const { data, status } = useGetSingleTask(id);
+
+  const form = useForm<UpdateTaskSchema>({
     defaultValues: {
       title: "",
       description: "",
-      priority: "LOW",
+      priority: Priority.MEDIUM,
     },
-    resolver: zodResolver(createTaskSchema),
+    resolver: zodResolver(updateTaskSchema),
   });
 
-  const { mutateAsync, isPending } = useCreateTask();
+  const { mutateAsync, isPending } = useUpdateTask(id);
 
-  const onSubmit = async (data: CreateTaskSchema) => {
-    await mutateAsync(data);
+  useEffect(() => {
+    if (data) {
+      form.reset({
+        title: data.title,
+        description: data.description,
+        priority: data.priority,
+      });
+    }
+  }, [data, form]);
+
+  const onSubmit = async (values: UpdateTaskSchema) => {
+    await mutateAsync(values);
     onSuccess();
   };
 
   const isLoading = isPending || form.formState.isSubmitting;
+
+  if (status === "pending") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "error") {
+    return <div>Something went wrong</div>;
+  }
 
   return (
     <form
@@ -47,7 +76,6 @@ const CreateTaskForm = ({ onSuccess }: Props) => {
 
               <Input
                 {...field}
-                className="bg-background/10"
                 id="title"
                 placeholder="Enter task title"
                 aria-invalid={fieldState.invalid}
@@ -92,22 +120,12 @@ const CreateTaskForm = ({ onSuccess }: Props) => {
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
 
-                <SelectContent className="flex flex-col justify-center gap-2">
-                  <SelectItem
-                    className="bg-stone-300"
-                    value={Priority.LOW}>
-                    Low
-                  </SelectItem>
-                  <SelectItem
-                    className="bg-stone-300"
-                    value={Priority.MEDIUM}>
-                    Medium
-                  </SelectItem>
-                  <SelectItem
-                    className="bg-stone-300"
-                    value={Priority.HIGH}>
-                    High
-                  </SelectItem>
+                <SelectContent>
+                  <SelectItem value={Priority.LOW}>Low</SelectItem>
+
+                  <SelectItem value={Priority.MEDIUM}>Medium</SelectItem>
+
+                  <SelectItem value={Priority.HIGH}>High</SelectItem>
                 </SelectContent>
               </Select>
 
@@ -117,27 +135,14 @@ const CreateTaskForm = ({ onSuccess }: Props) => {
         />
       </FieldGroup>
 
-      <DialogFooter className="mt-6">
-        <DialogClose
-          render={
-            <Button
-              type="button"
-              variant="outline"
-            />
-          }>
-          {" "}
-          Cancel{" "}
-        </DialogClose>
-
-        <Button
-          className="mx-auto block max-w-5xl"
-          type="submit"
-          disabled={isPending}>
-          {isLoading ? "Creating..." : "Create"}
-        </Button>
-      </DialogFooter>
+      <Button
+        type="submit"
+        disabled={isLoading}
+        className="mt-6">
+        {isLoading ? "Updating..." : "Update"}
+      </Button>
     </form>
   );
 };
 
-export default CreateTaskForm;
+export default UpdateTaskForm;
