@@ -1,8 +1,7 @@
 import { Status, type Task } from "@/types";
+import DeleteTaskDialog from "../DeleteTaskDialog";
 import { Badge } from "../ui/badge";
 import { Card, CardContent } from "../ui/card";
-import { Button } from "../ui/button";
-import { TrashIcon, ArrowRightIcon } from "lucide-react";
 import UpdateTaskDialog from "../update-tasks/UpdateTaskDialog";
 import UpdateTaskStatusDropdown from "../update-tasks/UpdateTaskStatusDropdown";
 
@@ -30,12 +29,7 @@ const TaskCard = ({ task }: Props) => {
 
           <UpdateTaskStatusDropdown task={task} />
 
-          <Button
-            variant="ghost"
-            size="icon"
-            title="Delete task">
-            <TrashIcon className="h-4 w-4" />
-          </Button>
+          <DeleteTaskDialog task={task} />
         </div>
 
         <div className="space-y-3">

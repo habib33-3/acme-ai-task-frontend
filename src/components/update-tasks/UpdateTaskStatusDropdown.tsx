@@ -4,9 +4,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowRightIcon } from "lucide-react";
-import { Status, type Task } from "@/types";
 import { useUpdateTaskStatus } from "@/hooks/useUpdateTaskStatus";
+import { Status, type Task } from "@/types";
+import { ArrowRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 
 type Props = {
