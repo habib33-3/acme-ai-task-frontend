@@ -1,35 +1,58 @@
-# React + TypeScript + Vite
+# Acme AI Job Task Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is the frontend application for the **Acme AI Job Task**. It is built with **Vite, React, and Tailwind CSS**.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 24+
+- pnpm
+- Docker and Docker Compose (optional)
 
-## React Compiler
+## Local Development
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Clone the repository:
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+git clone https://github.com/habib33-3/acme-ai-task-frontend.git
+cd acme-ai-task-frontend
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Install dependencies:
+
+```bash
+pnpm install
+```
+
+Create a `.env` file in the project root:
+
+```env
+VITE_API_URL=http://localhost:5000/api/v1
+```
+
+Start the development server:
+
+```bash
+pnpm dev
+```
+
+The application will be available at:
+
+http://localhost:5173
+
+## Docker
+
+To run the frontend using Docker Compose:
+
+```bash
+docker compose up
+```
+
+The application will be available at:
+
+http://localhost:80
+
+To stop the containers:
+
+```bash
+docker compose down
+```
