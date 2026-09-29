@@ -1,6 +1,6 @@
 import CreateTaskForm from "./CreateTaskForm";
-import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Button } from "../ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 
 const CreateTaskDialog = () => {
   return (

@@ -1,13 +1,13 @@
 import { createTaskSchema, type CreateTaskSchema } from "@/schema/create-task.schema";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "./ui/button";
-import { Field, FieldError, FieldGroup, FieldLabel } from "./ui/field";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { Button } from "../ui/button";
+import { Field, FieldError, FieldGroup, FieldLabel } from "../ui/field";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Priority } from "@/types";
-import { DialogClose, DialogFooter } from "./ui/dialog";
+import { DialogClose, DialogFooter } from "../ui/dialog";
 import useCreateTask from "@/hooks/useCreateTask";
 
 const CreateTaskForm = () => {
